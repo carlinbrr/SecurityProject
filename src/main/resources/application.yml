@@ -4,12 +4,12 @@ jwt:
 server:
   port: 8081
   error:
-    path: api/error
+    path: error
 
 spring:
   datasource:
     url: jdbc:mysql://localhost:3306/supportPortal
-    password: root
+    password:
     username: root
   jpa:
     show-sql: true

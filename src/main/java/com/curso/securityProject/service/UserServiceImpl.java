@@ -38,10 +38,9 @@ import static java.nio.file.StandardCopyOption.REPLACE_EXISTING;
 
 @Service
 @Transactional
-@Qualifier("UserDetailsService")
 public class UserServiceImpl implements UserService, UserDetailsService {
 
-    private Logger LOGGER = LoggerFactory.getLogger(getClass());
+    private final Logger LOGGER = LoggerFactory.getLogger(getClass());
 
     @Autowired
     private UserRepository userRepository;
@@ -171,8 +170,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     }
     @Override
     public User findUserById(Long id) throws UserNotFoundException {
-        User user = userRepository.findById(id).orElseThrow(()->new UserNotFoundException("User not found with id: " + id));
-        return user;
+        return userRepository.findById(id).orElseThrow(()->new UserNotFoundException("User not found with id: " + id));
     }
 
     @Override

@@ -19,7 +19,7 @@ import java.util.List;
 import static com.curso.securityProject.constant.SecurityConstant.JWT_TOKEN_HEADER;
 
 @RestController
-@RequestMapping(path = {"/","/api/user"})
+@RequestMapping(path = {"/", "/user"})
 public class UserResource extends ExceptionHandling {
 
     @Autowired

@@ -4,6 +4,7 @@ import com.curso.securityProject.constant.SecurityConstant;
 import com.curso.securityProject.filter.JwtAccessDeniedHandler;
 import com.curso.securityProject.filter.JwtAuthenticationEntryPoint;
 import com.curso.securityProject.filter.JwtAuthorizationFilter;
+import com.curso.securityProject.service.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
@@ -22,9 +23,7 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration
-@EnableWebSecurity
-@EnableGlobalMethodSecurity(prePostEnabled = true)
-public class SecurityConfiguration{
+public class SecurityConfiguration {
 
     @Autowired
     private JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
@@ -32,6 +31,19 @@ public class SecurityConfiguration{
     private JwtAccessDeniedHandler jwtAccessDeniedHandler;
     @Autowired
     private JwtAuthorizationFilter jwtAuthorizationFilter;
+    @Autowired
+    private UserDetailsService userDetailsService;
+    @Autowired
+    private BCryptPasswordEncoder bCryptPasswordEncoder;
+
+    @Bean
+    public AuthenticationManager authManager(HttpSecurity http) throws Exception {
+        return http.getSharedObject(AuthenticationManagerBuilder.class)
+                .userDetailsService(userDetailsService)
+                .passwordEncoder(bCryptPasswordEncoder)
+                .and()
+                .build();
+    }
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
@@ -44,8 +56,4 @@ public class SecurityConfiguration{
         return http.build();
     }
 
-    @Bean
-    public AuthenticationManager authenticationManagerBean(AuthenticationConfiguration authenticationConfiguration) throws Exception {
-        return authenticationConfiguration.getAuthenticationManager();
-    }
 }

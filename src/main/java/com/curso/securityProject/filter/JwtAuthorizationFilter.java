@@ -33,18 +33,17 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
             response.setStatus(HttpStatus.OK.value());
         }else{
             String authorizationHeader = request.getHeader(AUTHORIZATION);
-            if(authorizationHeader == null || !authorizationHeader.startsWith(TOKEN_PREFIX)){
-                filterChain.doFilter(request,response);
-                return;
-            }
-            String token = authorizationHeader.substring(TOKEN_PREFIX.length());
-            String username = jwtTokenProvider.getSubject(token);
-            if(jwtTokenProvider.isTokenValid(username,token)){
-                List<GrantedAuthority> authorityList = jwtTokenProvider.getAuthorities(token);
-                Authentication authentication = jwtTokenProvider.getAuthentication(username, authorityList, request);
-                SecurityContextHolder.getContext().setAuthentication(authentication);
-            }else{
-                SecurityContextHolder.clearContext();
+            if(authorizationHeader != null && authorizationHeader.startsWith(TOKEN_PREFIX)){
+                String token = authorizationHeader.substring(TOKEN_PREFIX.length());
+                String username = jwtTokenProvider.getSubject(token);
+                //Faltaría comprobar con UserServiceImpl que el username del token existe
+                if(jwtTokenProvider.isTokenValid(username,token)){
+                    List<GrantedAuthority> authorityList = jwtTokenProvider.getAuthorities(token);
+                    Authentication authentication = jwtTokenProvider.getAuthentication(username, authorityList, request);
+                    SecurityContextHolder.getContext().setAuthentication(authentication);
+                }else{
+                    SecurityContextHolder.clearContext();
+                }
             }
         }
         filterChain.doFilter(request,response);
