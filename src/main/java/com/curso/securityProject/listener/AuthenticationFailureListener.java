@@ -13,9 +13,9 @@ public class AuthenticationFailureListener {
 
     @Autowired
     private LoginAttemptService loginAttemptService;
-
+    //Se crea este listener que espera que se lance este evento
     @EventListener
-    public void onAuthenticationFailure(AuthenticationFailureBadCredentialsEvent event) throws ExecutionException {
+    public void onAuthenticationFailure(AuthenticationFailureBadCredentialsEvent event) {
         Object principal = event.getAuthentication().getPrincipal();
         if(principal instanceof String ){
             String username = (String) event.getAuthentication().getPrincipal();

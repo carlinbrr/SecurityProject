@@ -1,6 +1,5 @@
 package com.curso.securityProject.listener;
 
-import com.curso.securityProject.domain.User;
 import com.curso.securityProject.domain.UserPrincipal;
 import com.curso.securityProject.service.LoginAttemptService;
 import org.springframework.beans.factory.annotation.Autowired;

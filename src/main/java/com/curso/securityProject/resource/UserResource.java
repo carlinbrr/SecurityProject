@@ -59,11 +59,10 @@ public class UserResource extends ExceptionHandling {
         authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username,password));
     }
 
-    @PostMapping
-    public ResponseEntity<User> registarUsuario (@RequestBody User user)
+    @PostMapping("/register")
+    public ResponseEntity<User> register (@RequestBody User user)
             throws UserNotFoundException, EmailExistException, UsernameExistException {
-        System.out.println(user.getFirstName());
-        User user1 = userService.register(user.getFirstName(), user.getLastName(), user.getUsername(), user.getEmail());
-        return new ResponseEntity<>(user1, HttpStatus.CREATED);
+        User newUser = userService.register(user.getFirstName(), user.getLastName(), user.getUsername(), user.getEmail());
+        return new ResponseEntity<>(newUser, HttpStatus.CREATED);
     }
 }
