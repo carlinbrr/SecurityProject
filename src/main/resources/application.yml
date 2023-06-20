@@ -18,3 +18,5 @@ spring:
     properties:
       hibernate:
         dialect: org.hibernate.dialect.MySQL8Dialect
+
+frontEndHost: http://localhost:4200
