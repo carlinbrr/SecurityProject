@@ -2,9 +2,9 @@ package com.curso.securityProject.constant;
 
 public class EmailConstant {
     public static final String SIMPLE_MAIL_TRANSFER_PROTOCOL = "smtp";
-    public static final String USERNAME = "cd.collaguazo@hotmail.com";
-    public static final String PASSWORD = "Carloscolla01@";
-    public static final String FROM_EMAIL = "cd.collaguazo@hotmail.com";
+    public static final String USERNAME = "carlindev.8520@outlook.es";
+    public static final String PASSWORD = "carlindev2001";
+    public static final String FROM_EMAIL = "carlindev.8520@outlook.es";
     public static final String CC_EMAIL = "";
     public static final String EMAIL_SUBJECT = "Carlos Collaguazo app - New password";
     public static final String GMAIL_SMTP_SERVER = "smtp-mail.outlook.com";
