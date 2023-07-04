@@ -98,7 +98,7 @@ public class UserResource extends ExceptionHandling {
     @GetMapping("/reset-password/{email}")
     public ResponseEntity<HttpResponse> resetPassword (@PathVariable String email) throws EmailNotFoundException {
         userService.resetPassword(email);
-        return response(HttpStatus.OK, "An email with a new password was has been sent to: " + email);
+        return response(HttpStatus.OK, "An email with a new password has been sent to: " + email);
     }
 
     @DeleteMapping("/delete/{id}")
