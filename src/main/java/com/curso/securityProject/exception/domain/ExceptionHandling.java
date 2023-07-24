@@ -2,6 +2,7 @@ package com.curso.securityProject.exception.domain;
 
 import com.auth0.jwt.exceptions.TokenExpiredException;
 import com.curso.securityProject.domain.HttpResponse;
+import org.apache.coyote.Response;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.web.servlet.error.ErrorController;
@@ -61,6 +62,10 @@ public class ExceptionHandling implements ErrorController {
     }
     @ExceptionHandler(UsernameExistException.class)
     public ResponseEntity<HttpResponse> usernameExistException(UsernameExistException exception){
+        return createHttpResponse(HttpStatus.BAD_REQUEST, exception.getMessage());
+    }
+    @ExceptionHandler(NotAnImageFileException.class)
+    public ResponseEntity<HttpResponse> notAnImageFileException(NotAnImageFileException exception) {
         return createHttpResponse(HttpStatus.BAD_REQUEST, exception.getMessage());
     }
     @ExceptionHandler(EmailNotFoundException.class)

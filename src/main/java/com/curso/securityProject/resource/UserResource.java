@@ -57,6 +57,7 @@ public class UserResource extends ExceptionHandling {
     }
 
     @PostMapping("/add")
+    @PreAuthorize("hasAuthority('user:create')")
     public ResponseEntity<User> addNewUser (@RequestParam String firstName,
                                             @RequestParam String lastName,
                                             @RequestParam String username,
@@ -64,12 +65,13 @@ public class UserResource extends ExceptionHandling {
                                             @RequestParam String role,
                                             @RequestParam String isNonLocked,
                                             @RequestParam String isActive,
-                                            @RequestParam(required = false) MultipartFile profileImage) throws UserNotFoundException, EmailExistException, IOException, UsernameExistException {
+                                            @RequestParam(required = false) MultipartFile profileImage) throws UserNotFoundException, EmailExistException, IOException, UsernameExistException, NotAnImageFileException {
         User createdUser = userService.addNewUser(firstName, lastName, username, email, role, Boolean.parseBoolean(isNonLocked), Boolean.parseBoolean(isActive), profileImage);
         return new ResponseEntity<>(createdUser, HttpStatus.OK);
     }
 
     @PostMapping("/update")
+    @PreAuthorize("hasAuthority('user:update')")
     public ResponseEntity<User> updateUser (@RequestParam String currentUsername,
                                             @RequestParam String firstName,
                                             @RequestParam String lastName,
@@ -78,7 +80,7 @@ public class UserResource extends ExceptionHandling {
                                             @RequestParam String role,
                                             @RequestParam String isNonLocked,
                                             @RequestParam String isActive,
-                                            @RequestParam(required = false) MultipartFile profileImage) throws UserNotFoundException, EmailExistException, IOException, UsernameExistException {
+                                            @RequestParam(required = false) MultipartFile profileImage) throws UserNotFoundException, EmailExistException, IOException, UsernameExistException, NotAnImageFileException {
         User updatedUser = userService.updateUser(currentUsername, firstName, lastName, username, email, role, Boolean.parseBoolean(isNonLocked), Boolean.parseBoolean(isActive), profileImage);
         return new ResponseEntity<>(updatedUser, HttpStatus.OK);
     }
@@ -101,15 +103,15 @@ public class UserResource extends ExceptionHandling {
         return response(HttpStatus.OK, "An email with a new password has been sent to: " + email);
     }
 
-    @DeleteMapping("/delete/{id}")
+    @DeleteMapping("/delete/{username}")
     @PreAuthorize("hasAuthority('user:delete')")
-    public ResponseEntity<HttpResponse> deleteUser (@PathVariable Long id) {
-        userService.deleteUser(id);
+    public ResponseEntity<HttpResponse> deleteUser (@PathVariable String username) throws IOException {
+        userService.deleteUser(username);
         return response(HttpStatus.OK, "User deleted successfully");
     }
 
     @PostMapping("/update-profile-image")
-    public ResponseEntity<User> updateProfileImage (@RequestParam String username, @RequestParam MultipartFile profileImage) throws UserNotFoundException, EmailExistException, IOException, UsernameExistException {
+    public ResponseEntity<User> updateProfileImage (@RequestParam String username, @RequestParam MultipartFile profileImage) throws UserNotFoundException, EmailExistException, IOException, UsernameExistException, NotAnImageFileException {
         User user = userService.updateProfileImage(username, profileImage);
         return new ResponseEntity<>(user, HttpStatus.OK);
     }
