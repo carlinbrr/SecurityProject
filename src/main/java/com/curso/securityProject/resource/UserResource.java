@@ -57,7 +57,6 @@ public class UserResource extends ExceptionHandling {
     }
 
     @PostMapping("/add")
-    @PreAuthorize("hasAuthority('user:create')")
     public ResponseEntity<User> addNewUser (@RequestParam String firstName,
                                             @RequestParam String lastName,
                                             @RequestParam String username,
@@ -71,7 +70,6 @@ public class UserResource extends ExceptionHandling {
     }
 
     @PostMapping("/update")
-    @PreAuthorize("hasAuthority('user:update')")
     public ResponseEntity<User> updateUser (@RequestParam String currentUsername,
                                             @RequestParam String firstName,
                                             @RequestParam String lastName,
