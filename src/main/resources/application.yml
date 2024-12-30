@@ -7,10 +7,31 @@ server:
     path: error
 
 spring:
+  mail:
+    host: ${EMAIL_HOST}
+    port: ${EMAIL_PORT}
+    username: ${EMAIL_ID}
+    password: ${EMAIL_PASSWORD}
+    default-encoding: UTF-8
+    properties:
+      mail:
+        mime:
+          charset: UTF
+        smtp:
+          writetimeout: 10000
+          connectiontimeout: 10000
+          timeout: 10000
+          auth: true
+          starttls:
+            enable: true
+            required: true
+    verify:
+      host: ${VERIFY_EMAIL_HOST}
+
   datasource:
     url: jdbc:mysql://localhost:3306/supportPortal
     username: root
-    password:
+    password: root
   jpa:
     show-sql: true
     hibernate:
@@ -23,6 +44,10 @@ spring:
       max-file-size: 10MB
       max-request-size: 10MB
 
-
+EMAIL_HOST: smtp.gmail.com
+EMAIL_PORT: 587
+EMAIL_ID: carlosdev050@gmail.com
+EMAIL_PASSWORD: sfos rxef bmqt vctn
+VERIFY_EMAIL_HOST: http://localhost:8081
 
 frontEndHost: http://localhost:4200

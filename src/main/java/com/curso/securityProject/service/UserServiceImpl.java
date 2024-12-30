@@ -100,7 +100,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         user.setProfileImgUrl(getTemporaryProfileImageUrl(username));
         userRepository.save(user);
         LOGGER.info("(Register) New user created with username: " + username + " and password: " + password);
-        emailService.sendNewPasswordEmail(firstname, password, email);
+        emailService.sendPassword(firstname, email, password );
         return user;
     }
 
@@ -165,7 +165,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         String password = generatePassword();
         user.setPassword(encodePassword(password));
         userRepository.save(user);
-        emailService.sendNewPasswordEmail(user.getFirstName(), password, email);
+        emailService.sendPassword(user.getFirstName(), email, password);
         LOGGER.info("(ResetPassword) New password: " + password + ", for User with email: " + email);
     }
 
